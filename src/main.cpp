@@ -11,12 +11,9 @@
 // Uh Guys be for serious
 AutonFunction autonFunctions[] = {
     {"Right 6 Ball", rightSide6Ball}, 
-
     {"Right Far Rush", rightSideFarRush},
     {"Left Quals Rush", leftSideQual},
-    {"Skills", skills}, 
-    {"Skills Swing Test", skillsSwing},
-    
+    {"Skills", skills},  
     {"Left Elims", leftSideElims},
     // {"Left Quals", leftSideQualOld},
     {"Right 5 Ball", rightSideQuals},
@@ -109,8 +106,7 @@ bool wasR1PressedLast = false;
 bool wasR2PressedLast = false;
 void opcontrol() {
     // task to make sure all motors are plugged in and check the temperature of the drivetrain
-    pros::Task motorCheckDT(checkDTMotorsAndReturnTemperature);
-    pros::Task motorCheckOther(checkOtherMotorsAndReturnTemperature);
+    pros::Task motorCheckDT(checkMotorsAndReturnTemperature);
 
 
     // Driver Skills Code (COMMENT OUT when not doing skills)
@@ -154,8 +150,8 @@ void opcontrol() {
 
         EzTempChassis.opcontrol_tank();
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) { 
-            toggleSlapHang();
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) { 
+            releaseClamp();
             pros::delay(250);
         } 
 
@@ -167,7 +163,7 @@ void opcontrol() {
         bool isR1Pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
         bool isR2Pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
         if (isR1Pressed && !wasR1PressedLast) {
-            toggleVertWings();
+            toggleIntake();
         }
         wasR1PressedLast = isR1Pressed;
 
@@ -179,18 +175,6 @@ void opcontrol() {
 
         
 
-        if (!isSlap) {
-            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) { 
-                setSlapHang(127); 
-            } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) { 
-                setSlapHang(-127); 
-            } else { 
-                setSlapHang(0);
-            }
-        } else {
-            setSlapHang(-85);
-        }      
-
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { 
             intake = 127; 
         } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) { 
@@ -201,7 +185,6 @@ void opcontrol() {
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) { 
             motorCheckDT.suspend(); 
-            motorCheckOther.suspend(); 
         }
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) { 

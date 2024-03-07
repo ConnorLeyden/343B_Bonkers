@@ -12,5 +12,4 @@ void rightSideQualsTouchBar();
 void rightSideFarRush();
 void rightSide6Ball();
 void skills();
-void skillsSwing();
 void maintainOrientationTask();

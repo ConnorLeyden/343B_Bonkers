@@ -4,52 +4,56 @@
 #include "drivercontrol.hpp"
 
 bool horzWingsOut = false;
-bool vertWingsOut = false;
-bool isSlap = false;
-bool dropOut = false;
+bool isClampStopperOut = false;
+bool isPtoOut = false;
+bool isIntakeUp = false;
 bool isRatchetOut = true;
-pros::ADIDigitalOut vertwing1('A');
-pros::ADIDigitalOut vertwing2('B');
+
+
+pros::ADIDigitalOut intake1('A');
+pros::ADIDigitalOut intake2('B');
+pros::ADIDigitalOut pto('F');
 pros::ADIDigitalOut horzwing1('C');
 pros::ADIDigitalOut ratchet('D');
 pros::ADIDigitalOut horzwing2('E');
-
+pros::ADIDigitalOut clampStopper('G');
 // pros::ADIDigitalIn limitswitch ('E');
 
 
 pros::Motor intake (-1, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-pros::Motor slapHang1 (-15, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-pros::Motor slapHang2 (17, pros::E_MOTOR_GEARSET_36, true, pros::E_MOTOR_ENCODER_DEGREES);
 
 pros::Motor leftFront(11, pros::E_MOTOR_GEARSET_06, true); 
-pros::Motor leftBack(12, pros::E_MOTOR_GEARSET_06, true); 
-pros::Motor leftTop(-13, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor leftBack(12, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor leftMiddle1(13, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor leftMiddle2(14, pros::E_MOTOR_GEARSET_18, true); 
+
+pros::Motor rightMiddle1(17, pros::E_MOTOR_GEARSET_18, false); 
 pros::Motor rightFront(20, pros::E_MOTOR_GEARSET_06, false); 
 pros::Motor rightBack(19, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightTop(-18, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor rightMiddle2(-18, pros::E_MOTOR_GEARSET_06, true); 
 
-pros::MotorGroup left_side_motors({leftFront, leftBack, leftTop});
-pros::MotorGroup right_side_motors({rightFront, rightFront, rightTop});
+pros::MotorGroup left_side_motors({leftFront, leftBack, leftMiddle1, leftMiddle2});
+pros::MotorGroup right_side_motors({rightFront, rightFront, rightMiddle1, leftMiddle2});
 
-pros::Imu inertial_sensor(14); 
+pros::Imu inertial_sensor(15); 
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 Drive EzTempChassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-11, -12, 13}
+  {-11, -12, 13, 14}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{20, 19, -18}
+  ,{20, 19, -18, 17}
 
   // IMU Port
-  ,14
+  ,15
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
-  ,3.25
+  ,2.75
 
   // Cartridge RPM
   //   (or tick per rotation if using tracking wheels)
@@ -59,7 +63,7 @@ Drive EzTempChassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,1.333
+  ,1
 
 
   // Uncomment if using tracking wheels
@@ -120,9 +124,9 @@ lemlib::ControllerSettings angularController (
 
 lemlib::Chassis chassis(drivetrain, lateralController, angularController, sensors);
 
-void checkDTMotorsAndReturnTemperature() {
+void checkMotorsAndReturnTemperature() {
     std::vector<pros::Motor> motors1 = {
-        leftFront, leftBack, leftTop, rightFront, rightBack, rightTop
+        leftFront, leftBack, leftMiddle1, leftMiddle2, rightFront, rightBack, rightMiddle1, rightMiddle2, intake
     };
 
     while (true) {
@@ -137,7 +141,7 @@ void checkDTMotorsAndReturnTemperature() {
                 master.rumble("---");
             }
 
-            if (count < 6) {
+            if (count < 9) {
                 totalTemp += temp;
             }
             ++count;
@@ -152,40 +156,6 @@ void checkDTMotorsAndReturnTemperature() {
         pros::delay(1000);
     }
 }
-
-void checkOtherMotorsAndReturnTemperature() {
-    std::vector<pros::Motor> motors2 = {
-        intake, slapHang1, slapHang2
-    };
-
-    while (true) {
-        double totalTemp = 0.0;
-        int count = 0;
-
-        for (auto& motor : motors2) {
-            double temp = motor.get_temperature();
-            if (temp == PROS_ERR_F) { // PROS_ERR_F is returned when the motor is unplugged
-                master.set_text(0, 0, "Motor " + std::to_string(motor.get_port()) + " unplugged.");
-                pros::delay(250);
-                master.rumble("---");
-            }
-
-            if (count < 6) {
-                totalTemp += temp;
-            }
-            ++count;
-        }
-
-        if (count == 0) master.set_text(0, 0, "No motors found.");
-
-        double averageTempCelsius = totalTemp / count;
-        double averageTempFahrenheit = averageTempCelsius * 9.0 / 5.0 + 32.0;
-        master.set_text(0, 0, "Avg Other Temp: " + std::to_string(averageTempFahrenheit));
-
-        pros::delay(1000);
-    }
-}
-
 
 
 // inits
