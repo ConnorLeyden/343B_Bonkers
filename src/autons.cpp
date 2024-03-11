@@ -981,9 +981,6 @@ void rightSide6Ball() {
     pros::delay(100);
     EzTempChassis.pid_wait_until(-33);
 
-    
-    
-
     EzTempChassis.pid_turn_set(137, DRIVE_SPEED);
     pros::delay(100);
     EzTempChassis.pid_wait_until(135);
