@@ -482,8 +482,51 @@ void leftSideQual(){
     pros::delay(100);
     EzTempChassis.pid_wait();
 }
+void leftSideElimsBowlSetup() {
+    EzTempChassis.drive_angle_set(-77);
+    // Get mid ball 
 
-void leftSideElims() {
+    horzwing1.set_value(true);
+    EzTempChassis.pid_drive_set(52, 127, false);
+
+    EzTempChassis.pid_wait_until(25);
+    horzwing1.set_value(false);
+    intake = -127;
+    // horzwing.set_value(false);
+    // EzTempChassis.pid_wait_until(42);
+    // EzTempChassis.pid_drive_set(15, 127, false);
+    EzTempChassis.pid_wait_until(50);
+
+    EzTempChassis.pid_drive_set(-24, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-22);
+
+    EzTempChassis.pid_turn_set(103, DRIVE_SPEED, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(101);
+    intake=127;
+    pros::delay(200);
+
+    EzTempChassis.pid_turn_set(-60, DRIVE_SPEED, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-58);
+
+    intake=-127;
+    EzTempChassis.pid_drive_set(28, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(26);
+
+    EzTempChassis.pid_drive_set(-52, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-50);
+
+    EzTempChassis.pid_swing_set(ez::RIGHT_SWING, 5, DRIVE_SPEED);
+    pros::delay(100);
+    
+    EzTempChassis.pid_wait_until(7);
+
+}
+void leftSideElimsDisrupt() {
     EzTempChassis.drive_angle_set(-77);
     // Get mid ball 
 
@@ -819,6 +862,8 @@ void rightSideQualsTouchBar() {
 
 
 void rightSideFarRush() {
+
+    // Rush the Center
     EzTempChassis.drive_angle_set(60);
     // toggleHorzWings();
     horzwing2.set_value(true);
@@ -830,6 +875,25 @@ void rightSideFarRush() {
     intake=-127;
     pros::delay(100);
     EzTempChassis.pid_wait_until(61);
+
+    // OPTIONAL CODE 
+    // Optional to back up before turning towards the goal to avoid disruptions
+
+    // EzTempChassis.pid_drive_set(-8, DRIVE_SPEED, false);
+    // pros::delay(100);
+    // EzTempChassis.pid_wait_until(-6);
+
+    // EzTempChassis.pid_swing_set(ez::LEFT_SWING, 181, DRIVE_SPEED);
+    // pros::delay(100);
+    // EzTempChassis.pid_wait_until(178);
+
+    // EzTempChassis.pid_drive_set(32, 127, false);
+    // pros::delay(100);
+    // EzTempChassis.pid_wait_until(12);
+    // intake = 127;
+    // EzTempChassis.pid_wait_until(30);
+
+    // Turn to face goal after first ball
 
     EzTempChassis.pid_turn_set(180, 127);
     pros::delay(100);
