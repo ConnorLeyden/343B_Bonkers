@@ -364,6 +364,13 @@ void skills() {
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 
+
+
+
+// ===================================
+// Left Side Autons
+// ===================================
+
 // example auto for clearing matchload area and touching pole
 void leftSideQualOld() {
     intake = 127;
@@ -482,6 +489,8 @@ void leftSideQual(){
     pros::delay(100);
     EzTempChassis.pid_wait();
 }
+
+
 void leftSideElimsBowlSetup() {
     EzTempChassis.drive_angle_set(-77);
     // Get mid ball 
@@ -580,6 +589,7 @@ void leftSideElimsBowlSetup() {
     EzTempChassis.pid_wait_until(-32);
 
 }
+
 // DISRUPT ELIM AUTO
 void leftSideElimsDisrupt() {
     EzTempChassis.drive_angle_set(-77);
@@ -705,6 +715,11 @@ void leftSideElimsDisrupt() {
     intake = 0;
 
 }
+
+
+// =====================================================
+// RIGHT SIDE AUTONS 
+// =====================================================
 
 void rightSideQuals() {
     // lower intake
@@ -1226,8 +1241,6 @@ void rightSide6Ball() {
 
     toggleHorzWings();
 
-
-
     // REPUSH
     //  EzTempChassis.pid_drive_set(13, 127, false);
     // pros::delay(100);
@@ -1236,14 +1249,6 @@ void rightSide6Ball() {
     // EzTempChassis.pid_drive_set(-12, 127, false);
     // pros::delay(100);
     // EzTempChassis.pid_wait_until(-10);
-    
-
-
-
-    
-
-
-
 
 }
 
