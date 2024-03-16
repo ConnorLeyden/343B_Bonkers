@@ -497,35 +497,90 @@ void leftSideElimsBowlSetup() {
     // EzTempChassis.pid_drive_set(15, 127, false);
     EzTempChassis.pid_wait_until(50);
 
-    EzTempChassis.pid_drive_set(-24, 127, false);
+    EzTempChassis.pid_drive_set(-8, DRIVE_SPEED, false);
     pros::delay(100);
-    EzTempChassis.pid_wait_until(-22);
 
-    EzTempChassis.pid_turn_set(103, DRIVE_SPEED, false);
-    pros::delay(100);
-    EzTempChassis.pid_wait_until(101);
-    intake=127;
-    pros::delay(200);
-
-    EzTempChassis.pid_turn_set(-60, DRIVE_SPEED, false);
-    pros::delay(100);
-    EzTempChassis.pid_wait_until(-58);
-
-    intake=-127;
-    EzTempChassis.pid_drive_set(28, 127, false);
-    pros::delay(100);
-    EzTempChassis.pid_wait_until(26);
-
-    EzTempChassis.pid_drive_set(-52, 127, false);
-    pros::delay(100);
-    EzTempChassis.pid_wait_until(-50);
-
-    EzTempChassis.pid_swing_set(ez::RIGHT_SWING, 5, DRIVE_SPEED);
-    pros::delay(100);
+    EzTempChassis.pid_wait_until(-5);
     
-    EzTempChassis.pid_wait_until(7);
+    EzTempChassis.pid_turn_set(-180, DRIVE_SPEED, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-178);
+
+    EzTempChassis.pid_drive_set(18, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(16);
+
+    EzTempChassis.pid_turn_set(-90, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-92);
+
+    pros::delay(100);
+
+
+    EzTempChassis.pid_drive_set(-28, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-26);
+
+    EzTempChassis.pid_drive_set(5, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(3);
+
+    EzTempChassis.pid_turn_set(90, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(87);
+
+    intake=127;
+
+    EzTempChassis.pid_drive_set(7, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(5);
+
+    EzTempChassis.pid_swing_set(LEFT_SWING, 70, -127, -DRIVE_SPEED);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(67);
+
+    EzTempChassis.pid_turn_set(135, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(133);
+
+    EzTempChassis.pid_drive_set(22, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(20);
+
+    EzTempChassis.pid_swing_set(RIGHT_SWING, 90, 127, DRIVE_SPEED);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(92);
+
+    horzwing2.set_value(true);
+
+    EzTempChassis.pid_turn_set(0, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(2);
+
+    pros::delay(100);
+
+    EzTempChassis.pid_turn_set(10, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(8);
+
+    EzTempChassis.pid_swing_set(RIGHT_SWING, 0, 127, 30);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(2);
+
+    intake=127;
+
+    EzTempChassis.pid_drive_set(34, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(32);
+
+    pros::delay(100);
+
+    EzTempChassis.pid_drive_set(-34, 127, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-32);
 
 }
+// DISRUPT ELIM AUTO
 void leftSideElimsDisrupt() {
     EzTempChassis.drive_angle_set(-77);
     // Get mid ball 
@@ -543,9 +598,14 @@ void leftSideElimsDisrupt() {
 
 
     // Turn to push 2 balls over to the other side
-    EzTempChassis.pid_turn_set(0, DRIVE_SPEED, false);
+    EzTempChassis.pid_drive_set(-6, DRIVE_SPEED, false);
     pros::delay(100);
+
     EzTempChassis.pid_wait_until(-3);
+    
+    EzTempChassis.pid_turn_set(-180, DRIVE_SPEED, false);
+    pros::delay(100);
+    EzTempChassis.pid_wait_until(-178);
 
     toggleHorzWings();
 
@@ -574,7 +634,7 @@ void leftSideElimsDisrupt() {
 
     EzTempChassis.pid_turn_set(-77, DRIVE_SPEED, false);
     pros::delay(100);
-    EzTempChassis.pid_wait_until(-75);
+    EzTempChassis.pid_wait_until(-79);
 
     //Go back to the origin
     EzTempChassis.pid_drive_set(-55, DRIVE_SPEED, false);

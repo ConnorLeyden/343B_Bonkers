@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Zachfishzot",
+    "project_name": "WinWorldsFuture",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -387,7 +387,7 @@
       }
     },
     "upload_options": {
-      "description": "zotbotics",
+      "description": "LOCK in ZACH",
       "icon": "X",
       "slot": 1
     }

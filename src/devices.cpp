@@ -22,15 +22,15 @@ pros::ADIDigitalOut clampStopper('G');
 
 pros::Motor intake (-1, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
 
-pros::Motor leftFront(11, pros::E_MOTOR_GEARSET_06, true); 
-pros::Motor leftBack(12, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor leftMiddle1(13, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor leftMiddle2(14, pros::E_MOTOR_GEARSET_18, true); 
+pros::Motor leftFront(17, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor leftBack(18, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor leftMiddle1(19, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor leftMiddle2(20, pros::E_MOTOR_GEARSET_18, false); 
 
-pros::Motor rightMiddle1(17, pros::E_MOTOR_GEARSET_18, false); 
-pros::Motor rightFront(20, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightBack(19, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightMiddle2(-18, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor rightMiddle1(7, pros::E_MOTOR_GEARSET_18, true); 
+pros::Motor rightFront(8, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor rightBack(9, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor rightMiddle2(10, pros::E_MOTOR_GEARSET_06, true); 
 
 pros::MotorGroup left_side_motors({leftFront, leftBack, leftMiddle1, leftMiddle2});
 pros::MotorGroup right_side_motors({rightFront, rightFront, rightMiddle1, leftMiddle2});
@@ -42,11 +42,11 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 Drive EzTempChassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-11, -12, 13, 14}
+  {-17, 18, -19, -20}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{20, 19, -18, 17}
+  ,{7, -8, 9, 10}
 
   // IMU Port
   ,15
