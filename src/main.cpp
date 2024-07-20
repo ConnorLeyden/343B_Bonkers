@@ -8,6 +8,7 @@
 #include "screen.hpp"
 #include "display/lvgl.h" 
 // Enter your autons here!
+// The imposter pulled up to test github on VS code lol
 
 AutonFunction autonFunctions[] = {
     {"Right 6 Ball", rightSide6Ball}, 
